@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView textView;
+
     Button button1;
     Button button2;
     Button button3;
@@ -29,7 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button18;
     Button button19;
     Button button20;
-    StringBuilder textViewBuilder;
+    public static TextView textView;
+    public static StringBuilder textViewBuilder;
+    public static boolean isCaclulate = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,16 +119,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button5:
+                clean();
                 textViewBuilder.append("7");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button6:
+                clean();
                 textViewBuilder.append("8");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button7:
+                clean();
                 textViewBuilder.append("9");
                 textView.setText(textViewBuilder);
                 break;
@@ -140,16 +146,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button9:
+                clean();
                 textViewBuilder.append("4");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button10:
+                clean();
                 textViewBuilder.append("5");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button11:
+                clean();
                 textViewBuilder.append("6");
                 textView.setText(textViewBuilder);
                 break;
@@ -164,25 +173,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button13:
+                clean();
                 textViewBuilder.append("1");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button14:
+                clean();
                 textViewBuilder.append("2");
                 textView.setText(textViewBuilder);
                 break;
 
             case R.id.button15:
+                clean();
                 textViewBuilder.append("3");
                 textView.setText(textViewBuilder);
                 break;
 
-            case R.id.button16:
-
-                break;
-
             case R.id.button17:
+                clean();
                 textViewBuilder.append("0");
                 textView.setText(textViewBuilder);
                 break;
@@ -199,28 +208,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button19:
 
                 break;
-
-            case R.id.button20:
+            case R.id.button20 | R.id.button16:
                 textView.setText(calculate(textViewBuilder));
+                isCaclulate = true;
                 break;
         }
     }
 
     public static String calculate(StringBuilder stringBuilder) {
         String result = "Давай сам считай!";
-
         return result;
     }
 
     public static boolean isSign(StringBuilder stringBuilder) {
         boolean result = false;
-        char[] sighs = {'.', '+', '-', '*', '/'};
-        char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
-        for (char c : sighs) {
-            if (c == lastChar) {
-                result = true;
+        char[] signs = {'.', '+', '-', '*', '/'};
+
+        if (stringBuilder.length() > 0) {
+            char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
+            for (char c : signs) {
+                if (c == lastChar) {
+                    result = true;
+                }
             }
+        }else {
+            result=true;
         }
         return result;
+    }
+
+    public static void clean() {
+        if (isCaclulate) {
+            textViewBuilder.setLength(0);
+            textView.setText(textViewBuilder);
+            isCaclulate = false;
+        }
     }
 }
