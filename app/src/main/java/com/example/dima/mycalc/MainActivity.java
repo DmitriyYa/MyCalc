@@ -29,9 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button18;
     Button button19;
     Button button20;
-    public static TextView textView;
+    public static TextView textView1;
+    public static TextView textView2;
+    public static TextView textView3;
+
     public static StringBuilder textViewBuilder;
-    public static boolean isCaclulate = false;
+    public static StringBuilder memory;
+    public static StringBuilder result;
+    public static boolean isCalсulate = false;
+    public static final char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    public static final char[] signs = {'.', '+', '-', '*', '/'};
 
 
     @Override
@@ -39,7 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textView);
+
+        textViewBuilder = new StringBuilder();
+        memory = new StringBuilder();
+        result = new StringBuilder();
+
+        textView1 = (TextView) findViewById(R.id.textView1);
+        textView2 = (TextView) findViewById(R.id.textView2);
+        textView3 = (TextView) findViewById(R.id.textView3);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
@@ -60,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button18 = (Button) findViewById(R.id.button18);
         button19 = (Button) findViewById(R.id.button19);
         button20 = (Button) findViewById(R.id.button20);
-        textViewBuilder = new StringBuilder();
 
 
         button1.setOnClickListener(this);
@@ -90,139 +103,165 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.button1:
                 textViewBuilder.setLength(0);
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
+                textView2.setText(textViewBuilder);
+                textView3.setText(textViewBuilder);
                 break;
 
             case R.id.button2:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_LONG).show();
+                if (isDigit(textViewBuilder)) {
+                    Toast.makeText(this, "Введите знак", Toast.LENGTH_SHORT).show();
                 } else {
-                    textViewBuilder.append("/");
+                    textViewBuilder.append(memory);
                 }
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button3:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_LONG).show();
-                } else {
-                    textViewBuilder.append("*");
-                }
-                textView.setText(textViewBuilder);
+                memory.setLength(0);
+                memory.append(result);
+                textView2.setText(memory);
                 break;
 
             case R.id.button4:
                 if (textViewBuilder.length() > 0) {
                     textViewBuilder.setLength(textViewBuilder.length() - 1);
                 }
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button5:
-                clean();
                 textViewBuilder.append("7");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button6:
-                clean();
                 textViewBuilder.append("8");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button7:
-                clean();
                 textViewBuilder.append("9");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button8:
                 if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
                 } else {
-                    textViewBuilder.append("-");
+                    textViewBuilder.append("/");
                 }
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button9:
-                clean();
                 textViewBuilder.append("4");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button10:
-                clean();
                 textViewBuilder.append("5");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button11:
-                clean();
                 textViewBuilder.append("6");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button12:
                 if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
                 } else {
-                    textViewBuilder.append("+");
+                    textViewBuilder.append("*");
                 }
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button13:
-                clean();
                 textViewBuilder.append("1");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button14:
-                clean();
                 textViewBuilder.append("2");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button15:
-                clean();
                 textViewBuilder.append("3");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
+                break;
+
+            case R.id.button16:
+                if (isSign(textViewBuilder)) {
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
+                } else {
+                    textViewBuilder.append("-");
+                }
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button17:
-                clean();
                 textViewBuilder.append("0");
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button18:
                 if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
                 } else {
                     textViewBuilder.append(".");
                 }
-                textView.setText(textViewBuilder);
+                textView1.setText(textViewBuilder);
                 break;
 
             case R.id.button19:
-
+                result = calculate(textViewBuilder);
+                textView3.setText(result);
                 break;
-            case R.id.button20 | R.id.button16:
-                textView.setText(calculate(textViewBuilder));
-                isCaclulate = true;
+
+            case R.id.button20:
+                if (isSign(textViewBuilder)) {
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
+                } else {
+                    textViewBuilder.append("+");
+                }
+                textView1.setText(textViewBuilder);
                 break;
         }
     }
 
-    public static String calculate(StringBuilder stringBuilder) {
-        String result = "Давай сам считай!";
+    /**
+     * Условия расчета:
+     *
+     * @param stringBuilder
+     * @return
+     */
+    public static StringBuilder calculate(StringBuilder stringBuilder) {
+        StringBuilder result = new StringBuilder();
+
+        double res = 0;
+        String sign = "\\+";
+        String[] arrStr = stringBuilder.toString().split(sign);
+        for (int i = 0; i < arrStr.length; i++) {
+            res = res + Double.parseDouble(arrStr[i]);
+        }
+        result.append(res);
+//        result.append("Ой!");
+        textViewBuilder.setLength(0);
+        textView1.setText(textViewBuilder);
         return result;
     }
 
+    /**
+     * проверяет, что по последний символ знак действия
+     *
+     * @param stringBuilder
+     * @return
+     */
     public static boolean isSign(StringBuilder stringBuilder) {
         boolean result = false;
-        char[] signs = {'.', '+', '-', '*', '/'};
 
         if (stringBuilder.length() > 0) {
             char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
@@ -231,17 +270,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     result = true;
                 }
             }
-        }else {
-            result=true;
+        } else {
+            result = true;
         }
         return result;
     }
 
-    public static void clean() {
-        if (isCaclulate) {
-            textViewBuilder.setLength(0);
-            textView.setText(textViewBuilder);
-            isCaclulate = false;
+    /**
+     * проверяет, что по последний символ цифра
+     *
+     * @param stringBuilder
+     * @return
+     */
+    public static boolean isDigit(StringBuilder stringBuilder) {
+        boolean result = false;
+
+        if (stringBuilder.length() > 0) {
+            char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
+            for (char c : digit) {
+                if (c == lastChar) {
+                    result = true;
+                }
+            }
+        } else {
+            result = true;
         }
+        return result;
     }
+
+
+
 }
