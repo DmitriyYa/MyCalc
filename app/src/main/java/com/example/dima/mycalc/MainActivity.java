@@ -7,6 +7,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button button1;
@@ -217,7 +222,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button19:
-                result = calculate(textViewBuilder);
+                if (isSign(textViewBuilder)) {
+                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
+                } else {
+                    result = calculate(textViewBuilder);
+                }
                 textView3.setText(result);
                 break;
 
@@ -240,22 +249,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public static StringBuilder calculate(StringBuilder stringBuilder) {
         StringBuilder result = new StringBuilder();
+        String plus = "+";
+        String minus = "-";
+        String multipl = "*";
+        String dictionary = "/";
 
-        double res = 0;
-        String sign = "\\+";
-        String[] arrStr = stringBuilder.toString().split(sign);
-        for (int i = 0; i < arrStr.length; i++) {
-            res = res + Double.parseDouble(arrStr[i]);
+        String[] digits = stringBuilder.toString().split("[+\\-*/]");
+        String[] signs = stringBuilder.toString().split("\\d+\\.*\\d*");
+
+        List<Double> digitsList = new LinkedList<>();
+        List<String> signlist = new LinkedList<>();
+
+        for (int i = 0; i < digits.length; i++) {
+            digitsList.add(Double.parseDouble(digits[i]));
         }
-        result.append(res);
-//        result.append("Ой!");
+
+        for (int i = 1; i < signs.length; i++) {
+            signlist.add(signs[i]);
+        }
+
+        while (digitsList.size() != 1) {
+            for (int i = 0; i < signlist.size(); i++) {
+                if (signlist.get(i).equals(multipl)) {
+                    digitsList.set(i, digitsList.get(i) * digitsList.get(i + 1));
+                    digitsList.remove(i + 1);
+                    signlist.remove(i);
+                    i--;
+                    continue;
+                }
+                if (signlist.get(i).equals(dictionary)) {
+                    digitsList.set(i, digitsList.get(i) / digitsList.get(i + 1));
+                    digitsList.remove(i + 1);
+                    signlist.remove(i);
+                    i--;
+                }
+            }
+            for (int i = 0; i < signlist.size(); i++) {
+                if (signlist.get(i).equals(plus)) {
+                    digitsList.set(i, digitsList.get(i) + digitsList.get(i + 1));
+                    digitsList.remove(i + 1);
+                    signlist.remove(i);
+                    i--;
+                    continue;
+                }
+                if (signlist.get(i).equals(minus)) {
+                    digitsList.set(i, digitsList.get(i) - digitsList.get(i + 1));
+                    digitsList.remove(i + 1);
+                    signlist.remove(i);
+                    i--;
+                }
+            }
+        }
+
+        result.append(digitsList.get(0));
         textViewBuilder.setLength(0);
         textView1.setText(textViewBuilder);
         return result;
     }
 
     /**
-     * проверяет, что по последний символ знак действия
+     * проверяет, что  последний символ знак действия
      *
      * @param stringBuilder
      * @return
@@ -277,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * проверяет, что по последний символ цифра
+     * проверяет, что последний символ цифра
      *
      * @param stringBuilder
      * @return
@@ -297,7 +350,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return result;
     }
-
 
 
 }
