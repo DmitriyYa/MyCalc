@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button2:
-                if (isDigit(textViewBuilder)&&textViewBuilder.length()>0) {
+                if (isDigit(textViewBuilder) && textViewBuilder.length() > 0) {
                     Toast.makeText(this, "Введите знак", Toast.LENGTH_SHORT).show();
                 } else {
                     textViewBuilder.append(memory);
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     result = calculate(textViewBuilder);
                 }
-                textView3.setText(result);
+                textView3.setText(roundOff(result));
                 break;
 
             case R.id.button20:
@@ -349,6 +350,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return result;
     }
 
-//TODO добавить ограничение по количестку знаков после точки.
+    /**
+     * Округляем вывод результата расчета до трех символов после точки
+     *
+     * @param stringBuilder
+     * @return
+     */
+    public static String roundOff(StringBuilder stringBuilder) {
+        String result;
+        int indexPoint = stringBuilder.indexOf(".");
+
+        if (indexPoint != -1) {
+            String tmp = stringBuilder.substring(indexPoint, stringBuilder.length());
+            if (tmp.length() > 5) {
+                result = stringBuilder.substring(0, indexPoint + 6);
+            } else result = stringBuilder.toString();
+        } else {
+            result = stringBuilder.toString();
+        }
+        return result;
+    }
+
 //TODO добавить работу с отрицательными значениями.
 }
