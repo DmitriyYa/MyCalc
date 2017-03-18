@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     result = calculate(textViewBuilder);
                 }
-                textView3.setText(roundOff(result));
+                textView3.setText(result);
                 break;
 
             case R.id.button20:
@@ -300,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        result.append(digitsList.get(0));
+        result.append(new BigDecimal(digitsList.get(0)).setScale(5,BigDecimal.ROUND_DOWN) );
         textViewBuilder.setLength(0);
         textView1.setText(textViewBuilder);
         return result;
@@ -350,26 +351,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return result;
     }
 
-    /**
-     * Округляем вывод результата расчета до трех символов после точки
-     *
-     * @param stringBuilder
-     * @return
-     */
-    public static String roundOff(StringBuilder stringBuilder) {
-        String result;
-        int indexPoint = stringBuilder.indexOf(".");
-
-        if (indexPoint != -1) {
-            String tmp = stringBuilder.substring(indexPoint, stringBuilder.length());
-            if (tmp.length() > 5) {
-                result = stringBuilder.substring(0, indexPoint + 6);
-            } else result = stringBuilder.toString();
-        } else {
-            result = stringBuilder.toString();
-        }
-        return result;
-    }
 
 //TODO добавить работу с отрицательными значениями.
+
 }
