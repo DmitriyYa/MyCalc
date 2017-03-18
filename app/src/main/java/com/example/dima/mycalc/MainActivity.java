@@ -6,11 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static StringBuilder textViewBuilder;
     public static StringBuilder memory;
     public static StringBuilder result;
-    public static boolean isCalсulate = false;
+
     public static final char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     public static final char[] signs = {'.', '+', '-', '*', '/'};
 
@@ -114,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button2:
-                if (isDigit(textViewBuilder)) {
+                if (isDigit(textViewBuilder)&&textViewBuilder.length()>0) {
                     Toast.makeText(this, "Введите знак", Toast.LENGTH_SHORT).show();
                 } else {
                     textViewBuilder.append(memory);
@@ -242,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * Условия расчета:
+     * Расчет
      *
      * @param stringBuilder
      * @return
@@ -351,5 +349,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return result;
     }
 
-
+//TODO добавить ограничение по количестку знаков после точки.
+//TODO добавить работу с отрицательными значениями.
 }
