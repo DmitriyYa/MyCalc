@@ -7,11 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
-
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button button1;
@@ -34,17 +29,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button button18;
     Button button19;
     Button button20;
-    public static TextView textView1;
-    public static TextView textView2;
-    public static TextView textView3;
 
-    public static StringBuilder textViewBuilder;
-    public static StringBuilder memory;
-    public static StringBuilder result;
+    TextView mainMonitor;
+    TextView memoryMonitor;
+    TextView resultMonitor;
 
-    public static final char[] digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    public static final char[] signs = {'.', '+', '-', '*', '/'};
-
+    public static StringBuilder stringBuilderMain;
+    public static StringBuilder stringBuilderMamory;
+    public static StringBuilder stringBuilderResulr;
+    public static long res;
+    public static String sign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
-        textViewBuilder = new StringBuilder();
-        memory = new StringBuilder();
-        result = new StringBuilder();
+        stringBuilderMain = new StringBuilder();
+        stringBuilderMamory = new StringBuilder();
+        stringBuilderResulr = new StringBuilder();
 
-        textView1 = (TextView) findViewById(R.id.textView1);
-        textView2 = (TextView) findViewById(R.id.textView2);
-        textView3 = (TextView) findViewById(R.id.textView3);
+        mainMonitor = (TextView) findViewById(R.id.textView1);
+        memoryMonitor = (TextView) findViewById(R.id.textView2);
+        resultMonitor = (TextView) findViewById(R.id.textView3);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
@@ -107,251 +101,153 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                textViewBuilder.setLength(0);
-                textView1.setText(textViewBuilder);
-                textView2.setText(textViewBuilder);
-                textView3.setText(textViewBuilder);
+                mainMonitor.setText("");
+                memoryMonitor.setText("");
+                resultMonitor.setText("");
                 break;
 
             case R.id.button2:
-                if (isDigit(textViewBuilder) && textViewBuilder.length() > 0) {
-                    Toast.makeText(this, "Введите знак", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append(memory);
-                }
-                textView1.setText(textViewBuilder);
+                mainMonitor.setText(memoryMonitor.getText());
                 break;
 
             case R.id.button3:
-                memory.setLength(0);
-                memory.append(result);
-                textView2.setText(memory);
+                memoryMonitor.setText(resultMonitor.getText());
                 break;
 
             case R.id.button4:
-                if (textViewBuilder.length() > 0) {
-                    textViewBuilder.setLength(textViewBuilder.length() - 1);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                if (stringBuilderMain.length() > 0) {
+                    stringBuilderMain.setLength(stringBuilderMain.length() - 1);
                 }
-                textView1.setText(textViewBuilder);
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button5:
-                textViewBuilder.append("7");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("7");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button6:
-                textViewBuilder.append("8");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("8");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button7:
-                textViewBuilder.append("9");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("9");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button8:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append("/");
-                }
-                textView1.setText(textViewBuilder);
+                sign = "/";
+                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                mainMonitor.setText("");
                 break;
 
             case R.id.button9:
-                textViewBuilder.append("4");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("4");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button10:
-                textViewBuilder.append("5");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("5");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button11:
-                textViewBuilder.append("6");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("6");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button12:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append("*");
-                }
-                textView1.setText(textViewBuilder);
+                sign = "*";
+                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                mainMonitor.setText("");
                 break;
 
             case R.id.button13:
-                textViewBuilder.append("1");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("1");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button14:
-                textViewBuilder.append("2");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("2");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button15:
-                textViewBuilder.append("3");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("3");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button16:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append("-");
+                if (mainMonitor.getText().length()==0){
+                    mainMonitor.setText("");
+                    mainMonitor.setText("-");
                 }
-                textView1.setText(textViewBuilder);
-                break;
-
+                else {
+                    sign = "-";
+                    stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                    mainMonitor.setText("");
+                    break;
+                }
             case R.id.button17:
-                textViewBuilder.append("0");
-                textView1.setText(textViewBuilder);
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                stringBuilderMain.append("0");
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button18:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append(".");
-                }
-                textView1.setText(textViewBuilder);
+
                 break;
 
             case R.id.button19:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    result = calculate(textViewBuilder);
+                if (stringBuilderResulr.length() > 0 && mainMonitor.getText().length() > 0) {
+                    switch (sign) {
+                        case "-":
+                            res = Long.parseLong(stringBuilderResulr.toString()) - Long.parseLong(mainMonitor.getText().toString());
+                            mainMonitor.setText("");
+                            resultMonitor.setText(String.valueOf(res));
+                            break;
+                        case "+":
+                            res = Long.parseLong(stringBuilderResulr.toString()) + Long.parseLong(mainMonitor.getText().toString());
+                            mainMonitor.setText("");
+                            resultMonitor.setText(String.valueOf(res));
+                            break;
+                        case "*":
+                            res = Long.parseLong(stringBuilderResulr.toString()) * Long.parseLong(mainMonitor.getText().toString());
+                            mainMonitor.setText("");
+                            resultMonitor.setText(String.valueOf(res));
+                            break;
+                        case "/":
+                            if (Integer.parseInt(mainMonitor.getText().toString()) == 0) {
+                                Toast.makeText(this, "На ноль делить нельзя", Toast.LENGTH_SHORT).show();
+                            } else {
+                                res = Long.parseLong(stringBuilderResulr.toString()) / Long.parseLong(mainMonitor.getText().toString());
+                                mainMonitor.setText("");
+                                resultMonitor.setText(String.valueOf(res));
+                            }
+                            break;
+                    }
                 }
-                textView3.setText(result);
                 break;
 
             case R.id.button20:
-                if (isSign(textViewBuilder)) {
-                    Toast.makeText(this, "Введите цифру", Toast.LENGTH_SHORT).show();
-                } else {
-                    textViewBuilder.append("+");
-                }
-                textView1.setText(textViewBuilder);
+                sign = "+";
+                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                mainMonitor.setText("");
                 break;
         }
-    }
-
-    /**
-     * Расчет
-     *
-     * @param stringBuilder
-     * @return
-     */
-    public static StringBuilder calculate(StringBuilder stringBuilder) {
-        StringBuilder result = new StringBuilder();
-        String plus = "+";
-        String minus = "-";
-        String multipl = "*";
-        String dictionary = "/";
-
-        String[] digits = stringBuilder.toString().split("[+\\-*/]");
-        String[] signs = stringBuilder.toString().split("\\d+\\.*\\d*");
-
-        List<Double> digitsList = new LinkedList<>();
-        List<String> signlist = new LinkedList<>();
-
-        for (int i = 0; i < digits.length; i++) {
-            digitsList.add(Double.parseDouble(digits[i]));
-        }
-
-        for (int i = 1; i < signs.length; i++) {
-            signlist.add(signs[i]);
-        }
-
-        while (digitsList.size() != 1) {
-            for (int i = 0; i < signlist.size(); i++) {
-                if (signlist.get(i).equals(multipl)) {
-                    digitsList.set(i, digitsList.get(i) * digitsList.get(i + 1));
-                    digitsList.remove(i + 1);
-                    signlist.remove(i);
-                    i--;
-                    continue;
-                }
-                if (signlist.get(i).equals(dictionary)) {
-                    digitsList.set(i, digitsList.get(i) / digitsList.get(i + 1));
-                    digitsList.remove(i + 1);
-                    signlist.remove(i);
-                    i--;
-                }
-            }
-            for (int i = 0; i < signlist.size(); i++) {
-                if (signlist.get(i).equals(plus)) {
-                    digitsList.set(i, digitsList.get(i) + digitsList.get(i + 1));
-                    digitsList.remove(i + 1);
-                    signlist.remove(i);
-                    i--;
-                    continue;
-                }
-                if (signlist.get(i).equals(minus)) {
-                    digitsList.set(i, digitsList.get(i) - digitsList.get(i + 1));
-                    digitsList.remove(i + 1);
-                    signlist.remove(i);
-                    i--;
-                }
-            }
-        }
-
-        result.append(new BigDecimal(digitsList.get(0)).setScale(5,BigDecimal.ROUND_DOWN) );
-        textViewBuilder.setLength(0);
-        textView1.setText(textViewBuilder);
-        return result;
-    }
-
-    /**
-     * проверяет, что  последний символ знак действия
-     *
-     * @param stringBuilder
-     * @return
-     */
-    public static boolean isSign(StringBuilder stringBuilder) {
-        boolean result = false;
-
-        if (stringBuilder.length() > 0) {
-            char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
-            for (char c : signs) {
-                if (c == lastChar) {
-                    result = true;
-                }
-            }
-        } else {
-            result = true;
-        }
-        return result;
-    }
-
-    /**
-     * проверяет, что последний символ цифра
-     *
-     * @param stringBuilder
-     * @return
-     */
-    public static boolean isDigit(StringBuilder stringBuilder) {
-        boolean result = false;
-
-        if (stringBuilder.length() > 0) {
-            char lastChar = stringBuilder.charAt(stringBuilder.length() - 1);
-            for (char c : digit) {
-                if (c == lastChar) {
-                    result = true;
-                }
-            }
-        } else {
-            result = true;
-        }
-        return result;
     }
 
 
 //TODO добавить работу с отрицательными значениями.
-
 }
