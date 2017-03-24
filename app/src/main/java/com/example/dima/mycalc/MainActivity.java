@@ -1,5 +1,7 @@
 package com.example.dima.mycalc;
 
+import java.math.BigDecimal;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,13 +34,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView mainMonitor;
     TextView memoryMonitor;
-    TextView resultMonitor;
 
     public static StringBuilder stringBuilderMain;
     public static StringBuilder stringBuilderMamory;
     public static StringBuilder stringBuilderResulr;
-    public static long res;
+    public static BigDecimal bg;
+    public static double res;
     public static String sign;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mainMonitor = (TextView) findViewById(R.id.textView1);
         memoryMonitor = (TextView) findViewById(R.id.textView2);
-        resultMonitor = (TextView) findViewById(R.id.textView3);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
@@ -101,9 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
+                if (mainMonitor.getText().length() == 0) {
+                    memoryMonitor.setText("");
+                }
                 mainMonitor.setText("");
-                memoryMonitor.setText("");
-                resultMonitor.setText("");
                 break;
 
             case R.id.button2:
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button3:
-                memoryMonitor.setText(resultMonitor.getText());
+                memoryMonitor.setText(mainMonitor.getText());
                 break;
 
             case R.id.button4:
@@ -189,11 +192,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button16:
-                if (mainMonitor.getText().length()==0){
+                if (mainMonitor.getText().length() == 0) {
                     mainMonitor.setText("");
                     mainMonitor.setText("-");
-                }
-                else {
+                    break;
+                } else {
                     sign = "-";
                     stringBuilderResulr = new StringBuilder(mainMonitor.getText());
                     mainMonitor.setText("");
@@ -206,37 +209,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button18:
-
+                stringBuilderMain = new StringBuilder(mainMonitor.getText());
+                if (stringBuilderMain.length() == 0) {
+                    stringBuilderMain.append("0.");
+                } else {
+                    stringBuilderMain.append(".");
+                }
+                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button19:
                 if (stringBuilderResulr.length() > 0 && mainMonitor.getText().length() > 0) {
                     switch (sign) {
                         case "-":
-                            res = Long.parseLong(stringBuilderResulr.toString()) - Long.parseLong(mainMonitor.getText().toString());
-                            mainMonitor.setText("");
-                            resultMonitor.setText(String.valueOf(res));
+                            res = Double.parseDouble(stringBuilderResulr.toString()) - Double.parseDouble(mainMonitor.getText().toString());
+                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bg));
                             break;
                         case "+":
-                            res = Long.parseLong(stringBuilderResulr.toString()) + Long.parseLong(mainMonitor.getText().toString());
-                            mainMonitor.setText("");
-                            resultMonitor.setText(String.valueOf(res));
+                            res = Double.parseDouble(stringBuilderResulr.toString()) + Double.parseDouble(mainMonitor.getText().toString());
+                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bg));
                             break;
                         case "*":
-                            res = Long.parseLong(stringBuilderResulr.toString()) * Long.parseLong(mainMonitor.getText().toString());
-                            mainMonitor.setText("");
-                            resultMonitor.setText(String.valueOf(res));
+                            res = Double.parseDouble(stringBuilderResulr.toString()) * Double.parseDouble(mainMonitor.getText().toString());
+                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bg));
                             break;
                         case "/":
-                            if (Integer.parseInt(mainMonitor.getText().toString()) == 0) {
+                            if (Double.parseDouble(mainMonitor.getText().toString()) == 0) {
                                 Toast.makeText(this, "На ноль делить нельзя", Toast.LENGTH_SHORT).show();
+
                             } else {
-                                res = Long.parseLong(stringBuilderResulr.toString()) / Long.parseLong(mainMonitor.getText().toString());
-                                mainMonitor.setText("");
-                                resultMonitor.setText(String.valueOf(res));
+                                res = Double.parseDouble(stringBuilderResulr.toString()) / Double.parseDouble(mainMonitor.getText().toString());
+                                bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                                mainMonitor.setText(String.valueOf(bg));
+
                             }
                             break;
                     }
+                    stringBuilderResulr.setLength(0);
+                    res = 0;
                 }
                 break;
 
@@ -249,5 +262,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-//TODO добавить работу с отрицательными значениями.
 }
