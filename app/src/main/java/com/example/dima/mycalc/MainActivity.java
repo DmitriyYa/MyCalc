@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button18:
                 stringBuilderMain = new StringBuilder(mainMonitor.getText());
-                if (stringBuilderMain.length() == 0) {
+                if (stringBuilderMain.length() == 0 || stringBuilderMain.toString().equals("-")) {
                     stringBuilderMain.append("0.");
                 } else {
                     stringBuilderMain.append(".");
