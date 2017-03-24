@@ -215,12 +215,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button18:
                 stringBuilderMain = new StringBuilder(mainMonitor.getText());
-                if (stringBuilderMain.length() == 0 || stringBuilderMain.toString().equals("-")) {
-                    stringBuilderMain.append("0.");
-                } else {
-                    stringBuilderMain.append(".");
+                if (stringBuilderMain.indexOf(".") == -1) {
+                    if (stringBuilderMain.length() == 0 || stringBuilderMain.toString().equals("-")) {
+                        stringBuilderMain.append("0.");
+                    } else {
+                        stringBuilderMain.append(".");
+                    }
+                    mainMonitor.setText(stringBuilderMain);
                 }
-                mainMonitor.setText(stringBuilderMain);
                 break;
 
             case R.id.button19:
@@ -228,30 +230,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     switch (sign) {
                         case "-":
                             res = Double.parseDouble(stringBuilderResult.toString()) - Double.parseDouble(mainMonitor.getText().toString());
-                            if (res % 1 == 0){
+                            if (res % 1 == 0) {
                                 bd = new BigDecimal(res);
-                            }
-                            else {
+                            } else {
                                 bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
                             }
                             mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "+":
                             res = Double.parseDouble(stringBuilderResult.toString()) + Double.parseDouble(mainMonitor.getText().toString());
-                            if (res % 1 == 0){
+                            if (res % 1 == 0) {
                                 bd = new BigDecimal(res);
-                            }
-                            else {
+                            } else {
                                 bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
                             }
                             mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "*":
                             res = Double.parseDouble(stringBuilderResult.toString()) * Double.parseDouble(mainMonitor.getText().toString());
-                            if (res % 1 == 0){
+                            if (res % 1 == 0) {
                                 bd = new BigDecimal(res);
-                            }
-                            else {
+                            } else {
                                 bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
                             }
                             mainMonitor.setText(String.valueOf(bd));
@@ -262,10 +261,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             } else {
                                 res = Double.parseDouble(stringBuilderResult.toString()) / Double.parseDouble(mainMonitor.getText().toString());
-                                if (res % 1 == 0){
+                                if (res % 1 == 0) {
                                     bd = new BigDecimal(res);
-                                }
-                                else {
+                                } else {
                                     bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
                                 }
                                 mainMonitor.setText(String.valueOf(bd));
