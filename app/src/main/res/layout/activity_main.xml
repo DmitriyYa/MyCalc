@@ -40,23 +40,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/textView3"
-            android:textIsSelectable="true"
-            android:textSize="@dimen/textSizeTextView"
-            android:textColor="@color/colorButtonEqual"
-            android:textAlignment="viewEnd" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
