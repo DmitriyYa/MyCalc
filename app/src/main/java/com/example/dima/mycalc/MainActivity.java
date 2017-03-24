@@ -223,17 +223,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     switch (sign) {
                         case "-":
                             res = Double.parseDouble(stringBuilderResult.toString()) - Double.parseDouble(mainMonitor.getText().toString());
-                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            if (res % 1 == 0){
+                                bd = new BigDecimal(res);
+                            }
+                            else {
+                                bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            }
                             mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "+":
                             res = Double.parseDouble(stringBuilderResult.toString()) + Double.parseDouble(mainMonitor.getText().toString());
-                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            if (res % 1 == 0){
+                                bd = new BigDecimal(res);
+                            }
+                            else {
+                                bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            }
                             mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "*":
                             res = Double.parseDouble(stringBuilderResult.toString()) * Double.parseDouble(mainMonitor.getText().toString());
-                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            if (res % 1 == 0){
+                                bd = new BigDecimal(res);
+                            }
+                            else {
+                                bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            }
                             mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "/":
@@ -242,7 +257,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             } else {
                                 res = Double.parseDouble(stringBuilderResult.toString()) / Double.parseDouble(mainMonitor.getText().toString());
-                                bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                                if (res % 1 == 0){
+                                    bd = new BigDecimal(res);
+                                }
+                                else {
+                                    bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                                }
                                 mainMonitor.setText(String.valueOf(bd));
 
                             }
