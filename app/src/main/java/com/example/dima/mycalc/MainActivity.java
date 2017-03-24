@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static StringBuilder stringBuilderMain;
     public static StringBuilder stringBuilderMamory;
+
     public static StringBuilder stringBuilderResult;
     public static BigDecimal bd;
     public static double res;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stringBuilderMain = new StringBuilder();
         stringBuilderMamory = new StringBuilder();
         stringBuilderResult = new StringBuilder();
+
 
         mainMonitor = (TextView) findViewById(R.id.textView1);
         memoryMonitor = (TextView) findViewById(R.id.textView2);
@@ -145,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button8:
                 sign = "/";
+
                 stringBuilderResult = new StringBuilder(mainMonitor.getText());
+
                 mainMonitor.setText("");
                 break;
 
@@ -169,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button12:
                 sign = "*";
+
                 stringBuilderResult = new StringBuilder(mainMonitor.getText());
                 mainMonitor.setText("");
                 break;
@@ -244,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 res = Double.parseDouble(stringBuilderResult.toString()) / Double.parseDouble(mainMonitor.getText().toString());
                                 bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
                                 mainMonitor.setText(String.valueOf(bd));
-
                             }
                             break;
                     }
