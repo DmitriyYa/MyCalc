@@ -37,8 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static StringBuilder stringBuilderMain;
     public static StringBuilder stringBuilderMamory;
-    public static StringBuilder stringBuilderResulr;
-    public static BigDecimal bg;
+
+    public static StringBuilder stringBuilderResult;
+    public static BigDecimal bd;
     public static double res;
     public static String sign;
 
@@ -51,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         stringBuilderMain = new StringBuilder();
         stringBuilderMamory = new StringBuilder();
-        stringBuilderResulr = new StringBuilder();
+        stringBuilderResult = new StringBuilder();
+
 
         mainMonitor = (TextView) findViewById(R.id.textView1);
         memoryMonitor = (TextView) findViewById(R.id.textView2);
@@ -145,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button8:
                 sign = "/";
-                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+
+                stringBuilderResult = new StringBuilder(mainMonitor.getText());
+
                 mainMonitor.setText("");
                 break;
 
@@ -169,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button12:
                 sign = "*";
-                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+
+                stringBuilderResult = new StringBuilder(mainMonitor.getText());
                 mainMonitor.setText("");
                 break;
 
@@ -198,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
                 } else {
                     sign = "-";
-                    stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                    stringBuilderResult = new StringBuilder(mainMonitor.getText());
                     mainMonitor.setText("");
                     break;
                 }
@@ -219,43 +224,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button19:
-                if (stringBuilderResulr.length() > 0 && mainMonitor.getText().length() > 0) {
+                if (stringBuilderResult.length() > 0 && mainMonitor.getText().length() > 0) {
                     switch (sign) {
                         case "-":
-                            res = Double.parseDouble(stringBuilderResulr.toString()) - Double.parseDouble(mainMonitor.getText().toString());
-                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
-                            mainMonitor.setText(String.valueOf(bg));
+                            res = Double.parseDouble(stringBuilderResult.toString()) - Double.parseDouble(mainMonitor.getText().toString());
+                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "+":
-                            res = Double.parseDouble(stringBuilderResulr.toString()) + Double.parseDouble(mainMonitor.getText().toString());
-                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
-                            mainMonitor.setText(String.valueOf(bg));
+                            res = Double.parseDouble(stringBuilderResult.toString()) + Double.parseDouble(mainMonitor.getText().toString());
+                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "*":
-                            res = Double.parseDouble(stringBuilderResulr.toString()) * Double.parseDouble(mainMonitor.getText().toString());
-                            bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
-                            mainMonitor.setText(String.valueOf(bg));
+                            res = Double.parseDouble(stringBuilderResult.toString()) * Double.parseDouble(mainMonitor.getText().toString());
+                            bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                            mainMonitor.setText(String.valueOf(bd));
                             break;
                         case "/":
                             if (Double.parseDouble(mainMonitor.getText().toString()) == 0) {
                                 Toast.makeText(this, "На ноль делить нельзя", Toast.LENGTH_SHORT).show();
 
                             } else {
-                                res = Double.parseDouble(stringBuilderResulr.toString()) / Double.parseDouble(mainMonitor.getText().toString());
-                                bg = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
-                                mainMonitor.setText(String.valueOf(bg));
-
+                                res = Double.parseDouble(stringBuilderResult.toString()) / Double.parseDouble(mainMonitor.getText().toString());
+                                bd = new BigDecimal(res).setScale(5, BigDecimal.ROUND_UP).stripTrailingZeros();
+                                mainMonitor.setText(String.valueOf(bd));
                             }
                             break;
                     }
-                    stringBuilderResulr.setLength(0);
+                    stringBuilderResult.setLength(0);
                     res = 0;
                 }
                 break;
 
             case R.id.button20:
                 sign = "+";
-                stringBuilderResulr = new StringBuilder(mainMonitor.getText());
+                stringBuilderResult = new StringBuilder(mainMonitor.getText());
                 mainMonitor.setText("");
                 break;
         }
